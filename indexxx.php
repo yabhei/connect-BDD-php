@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <link rel="stylesheet" href="style.css">
 <?php
 try
@@ -12,7 +17,7 @@ catch (Exception $e)
 }
 
 // On récupère les noms des film, date_sortie et les nom des realisateurs...
-$filminfo = $db->prepare('SELECT f.nom_film AS nf , f.date_sortie AS  df , p.nom_personne AS nr , p.prenom_personne AS pr
+$filminfo = $db->prepare('SELECT f.id_film AS id, f.nom_film AS nf , f.date_sortie AS  df , p.nom_personne AS nr , p.prenom_personne AS pr
 FROM personne p , film f, realisateur r
 WHERE p.id_personnage = r.id_realisateur
 AND r.id_realisateur = f.id_realisateur ');
@@ -21,6 +26,7 @@ $filminfo ->execute();
 
 $listfilm = $filminfo ->fetchAll();
 ?>
+<!-- on crée une table pour afficher les information -->
 <table>
                     <thead>
                         <tr>
@@ -36,7 +42,7 @@ $listfilm = $filminfo ->fetchAll();
                         ?>
             
                         <tr>
-                            <td  ><?php echo $film['nf'];?></td>
+                            <td  > <a href="detailsFilm.php?id=<?php echo $film['id'] ?>" target="_blank"><?php echo $film['nf'];?></a> </td>
                             <td  ><?php echo $film['df'];?></td>
                              <td ><?php echo  $film['nr'];echo " ";echo  $film['pr'];?></td>
                         </tr>
