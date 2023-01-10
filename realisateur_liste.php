@@ -2,12 +2,12 @@
 
 <?php
 // On se connecte à MySQL
-$db_real = new PDO ('mysql:host=localhost;dbname=cinema;charset=utf8', 'root', '');
+$db_real = new PDO('mysql:host=localhost;dbname=cinema;charset=utf8', 'root', '');
 
-// On récupère les realisateur
-$requ_real = $db_real->prepare('SELECT p.nom_personne AS np, p.prenom_personne AS pp
-FROM personne p 
-INNER JOIN realisateur r ON r.id_personnage = p.id_personnage');
+// On récupère les director
+$requ_real = $db_real->prepare('SELECT p.lname_person AS np, p.fname_person AS pp
+FROM person p 
+INNER JOIN director r ON r.id_person = p.id_person');
 
 $requ_real->execute();
 
@@ -17,25 +17,26 @@ $liste_real = $requ_real->fetchALL();
 <!-- on crée une table pour afficher les information -->
 <table>
     <thead>
-            <tr>
-                <th> Nom de realisateur </th>
-                <th> Prenom de realisateur </th>
-            </tr>
+        <tr>
+            <th> Nom de director </th>
+            <th> Prenom de director </th>
+        </tr>
     </thead>
     <tbody>
         <?php
-    foreach($liste_real as $realisateur)
-{
-    ?>
-    <tr>
-            <td> <?php echo $realisateur['np']; ?> </td>
-            <td> <?php echo $realisateur['pp']; ?>   </td>
-        </tr>
-   <?php
-}
+        foreach ($liste_real as $director) {
+            ?>
+            <tr>
+                <td> <?php echo $director['np']; ?> </td>
+                <td>
+                    <?php echo $director['pp']; ?>
+                </td>
+            </tr>
+            <?php
+        }
 
 
-?>
+        ?>
 
     </tbody>
 </table>

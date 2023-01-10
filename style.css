@@ -1,14 +1,14 @@
 table,
 td {
-    border: 1px solid #333;
+  border: 1px solid #333;
 }
 
 thead {
-    background-color: rgb(52, 48, 48);
-    color: #fff;
+  background-color: rgb(52, 48, 48);
+  color: #fff;
 }
 
-#ph{
-    height: 600px;
-    width:  600px;
+#ph {
+  height: 500px;
+  width: 500px;
 }

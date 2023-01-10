@@ -14,7 +14,7 @@ $db_infos = new PDO ('mysql:host=localhost;dbname=cinema;charset=utf8', 'root', 
 $db_act = new PDO ('mysql:host=localhost;dbname=cinema;charset=utf8', 'root', '');
 
 // On récupère les detailes de film
-$requ_infos = $db_infos->prepare('SELECT f.nom_film AS nf , f.date_sortie AS dtf, f.duree AS duf, f.image AS imgf
+$requ_infos = $db_infos->prepare('SELECT f.title_film AS nf , f.year_film AS dtf, f.duration_film AS duf, f.image AS imgf
 FROM film f
 WHERE f.id_film ='. $_GET['id']);
 
@@ -23,12 +23,12 @@ $requ_infos->execute();
 $liste_infos = $requ_infos->fetchALL();
 
 
-$requ_act = $db_act->prepare('SELECT p.nom_personne AS np, p.prenom_personne AS pp , r.nom_role AS rf
-FROM personne p , acteur a, role r , jouer j, film f
-WHERE p.id_personnage = a.id_personnage
+$requ_act = $db_act->prepare('SELECT p.id_person AS idp ,p.lname_person AS np, p.fname_person AS pp , r.name_role AS rf
+FROM person p , actor a, role r , play j, film f
+WHERE p.id_person = a.id_person
 AND j.id_film = f.id_film
 AND j.id_role = r.id_role
-AND j.id_acteur = a.id_acteur
+AND j.id_actor = a.id_actor
 AND f.id_film ='. $_GET['id']);
 
 $requ_act->execute();
@@ -44,8 +44,8 @@ $liste_acts = $requ_act->fetchALL();
 <p>
     <img src="<?php echo $info['imgf'];?>" id="ph">
     <h1><?php echo $info['nf'];?></h1>
-    <label> Date de film : </label> <input type="text" value="<?php echo $info['dtf']; ?>"> <br><br>
-    <label> Durée de film : </label> <input type="text" value="<?php echo $info['duf']; echo " min" ?>"> 
+    <label> Date de film : </label> <label ><?php echo $info['dtf']; ?></label> <br><br>
+    <label> Durée de film : </label> <label><?php echo $info['duf']; echo " min" ?></label>
 
     <?php
     }
@@ -56,8 +56,8 @@ $liste_acts = $requ_act->fetchALL();
     <thead>
             <tr>
                 
-                <th> Nom d'acteur </th>
-                <th> prenom d'acteur </th>
+                <th> Nom d'actor </th>
+                <th> prenom d'actor </th>
                 <th> Role </th>
                
             </tr>
@@ -65,14 +65,14 @@ $liste_acts = $requ_act->fetchALL();
     <tbody>
 
     <?php
-    foreach($liste_acts as $acteur)
+    foreach($liste_acts as $actor)
     {
     ?>
    <tr>
            
-            <td> <?php echo $acteur['np']; ?> </td>
-            <td> <?php echo $acteur['pp']; ?> </td>
-            <td> <?php echo $acteur['rf']; ?> </td>
+            <td><a href="detailsActor.php?id=<?php echo $actor['idp'] ?>" target="_blank"><?php echo $actor['np']; ?></a> </td>
+            <td><a href="detailsActor.php?id=<?php echo $actor['idp'] ?>" target="_blank"> <?php echo $actor['pp']; ?></a> </td>
+            <td><?php echo $actor['rf']; ?> </td>
         </tr>
    <?php
     }

@@ -2,38 +2,37 @@
 
 <?php
 // On se connecte à MySQL
-$db_genre = new PDO ('mysql:host=localhost;dbname=cinema;charset=utf8', 'root', '');
+$db_category = new PDO('mysql:host=localhost;dbname=cinema;charset=utf8', 'root', '');
 
-// On récupère les genres
-$requ_genre = $db_genre->prepare('SELECT libelle FROM genre ');
+// On récupère les categorys
+$requ_category = $db_category->prepare('SELECT name_category FROM category ');
 
-$requ_genre->execute();
+$requ_category->execute();
 
-$liste_genre = $requ_genre->fetchALL();
+$liste_category = $requ_category->fetchALL();
 ?>
 
 <!-- on crée une table pour afficher les information -->
 <table>
     <thead>
-            <tr>
-                <th>Les genres des films </th>
-                
-            </tr>
+        <tr>
+            <th>Les categorys des films </th>
+
+        </tr>
     </thead>
     <tbody>
         <?php
-    foreach($liste_genre as $genre)
-{
-    ?>
-    <tr>
-            <td> <?php echo $genre['libelle']; ?> </td>
-            
-        </tr>
-   <?php
-}
+        foreach ($liste_category as $category) {
+            ?>
+            <tr>
+                <td> <?php echo $category['name_category']; ?> </td>
+
+            </tr>
+            <?php
+        }
 
 
-?>
+        ?>
 
     </tbody>
 </table>
